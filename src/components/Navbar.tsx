@@ -24,13 +24,13 @@ export default function Navbar({ onNavigate }: NavbarProps) {
         <div className="flex space-x-4 md:space-x-10">
           <button
             onClick={() => onNavigate('works')}
-            className="text-sm md:text-base cursor-pointer font-medium hover:text-gray-300 transition-colors duration-300"
+            className="text-sm md:text-base cursor-pointer font-medium hover:text-gray-300 transition-transform duration-200 active:scale-80"
           >
             How Dinio Works
           </button>
           <button
             onClick={() => onNavigate('contact')}
-            className="text-sm md:text-base cursor-pointer font-medium hover:text-gray-300 transition-colors duration-300"
+            className="text-sm md:text-base cursor-pointer font-medium hover:text-gray-300 transition-transform duration-200 active:scale-80"
           >
             Contact
           </button>

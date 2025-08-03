@@ -17,10 +17,8 @@ function App() {
   const handleNavigate = (section: Section) => {
     if (section !== currentSection && !isTransitioning) {
       setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentSection(section);
-        setIsTransitioning(false);
-      }, 600);
+      setCurrentSection(section);
+      setIsTransitioning(false);
     }
   };
 
