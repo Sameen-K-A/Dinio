@@ -22,36 +22,30 @@ function App() {
     }
   };
 
-  // Handle scroll-based navigation
   useEffect(() => {
-
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (isTransitioning) return;
 
-      setIsTransitioning(true);
+      let nextSection: Section | null = null;
 
-      if (e.deltaY > 0) {     // Scroll down
-        if (currentSection === 'home') {
-          setCurrentSection('works');
-        } else if (currentSection === 'works') {
-          setCurrentSection('contact');
-        }
-      } else if (e.deltaY < 0) {      // Scroll up
-        if (currentSection === 'contact') {
-          setCurrentSection('works');
-        } else if (currentSection === 'works') {
-          setCurrentSection('home');
-        }
+      if (e.deltaY > 0) {
+        if (currentSection === 'home') nextSection = 'works';
+        else if (currentSection === 'works') nextSection = 'contact';
+      } else if (e.deltaY < 0) {
+        if (currentSection === 'contact') nextSection = 'works';
+        else if (currentSection === 'works') nextSection = 'home';
       }
 
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 600);
+      if (nextSection) {
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setCurrentSection(nextSection!);
+          setIsTransitioning(false);
+        }, 600);
+      }
     };
 
-
-    // Handle touch events for mobile
     let touchStartY = 0;
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -64,26 +58,24 @@ function App() {
       const touchEndY = e.changedTouches[0].clientY;
       const deltaY = touchStartY - touchEndY;
 
-      if (Math.abs(deltaY) > 500) {
-        setIsTransitioning(true);
+      if (Math.abs(deltaY) > 50) {
+        let nextSection: Section | null = null;
 
         if (deltaY > 0) {
-          if (currentSection === 'home') {
-            setCurrentSection('works');
-          } else if (currentSection === 'works') {
-            setCurrentSection('contact');
-          }
+          if (currentSection === 'home') nextSection = 'works';
+          else if (currentSection === 'works') nextSection = 'contact';
         } else {
-          if (currentSection === 'contact') {
-            setCurrentSection('works');
-          } else if (currentSection === 'works') {
-            setCurrentSection('home');
-          }
+          if (currentSection === 'contact') nextSection = 'works';
+          else if (currentSection === 'works') nextSection = 'home';
         }
 
-        setTimeout(() => {
-          setIsTransitioning(false);
-        }, 600);
+        if (nextSection) {
+          setIsTransitioning(true);
+          setTimeout(() => {
+            setCurrentSection(nextSection!);
+            setIsTransitioning(false);
+          }, 600);
+        }
       }
     };
 

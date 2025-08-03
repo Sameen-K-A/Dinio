@@ -30,7 +30,7 @@ export default function ContactSection() {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="text-lg leading-relaxed mb-8"
+            className="md:text-lg leading-relaxed mb-8"
           >
             Got a question, a spark of curiosity, or something you'd love to share? Whether you're exploring how we work, thinking about onboarding, or just wondering what we're building — we're here and ready to listen.
             Your message won't go into a void. It lands with the people who care.
