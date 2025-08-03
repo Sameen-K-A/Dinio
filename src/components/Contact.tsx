@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function ContactSection() {
   return (
-    <div className="h-screen w-full relative flex items-center justify-center p-4 md:p-6">
+    <div className="h-[100dvh] w-full relative flex items-center justify-center p-4 md:p-6">
       <div className="max-w-6xl mx-auto w-full">
         <motion.div
           initial="hidden"

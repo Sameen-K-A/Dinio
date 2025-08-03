@@ -18,7 +18,7 @@ const WorksSection: React.FC = () => {
    ];
 
    return (
-      <div className="h-screen relative w-full flex flex-col items-center justify-center p-4 md:p-6">
+      <div className="h-[100dvh] relative w-full flex flex-col items-center justify-center p-4 md:p-6">
          <div className="max-w-xl w-full">
             <motion.div
                initial={{ opacity: 0, y: 0 }}

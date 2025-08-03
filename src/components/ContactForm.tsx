@@ -18,7 +18,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="h-screen w-full bg-black text-white flex items-center justify-center px-6 md:px-8 pt-20 md:pt-24">
+    <div className="h-[100dvh] w-full bg-black text-white flex items-center justify-center px-6 md:px-8 pt-20 md:pt-24">
       <div className="max-w-6xl mx-auto w-full">
 
 

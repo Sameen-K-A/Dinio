@@ -111,7 +111,7 @@ function App() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-[100dvh] overflow-hidden">
       <Navbar onNavigate={handleNavigate} />
       <SocialIcons />
 
