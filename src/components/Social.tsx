@@ -7,7 +7,7 @@ export default function SocialIcons() {
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
+      transition={{ delay: 0.5, duration: 0.3, ease: "easeOut" }}
       className="fixed left-4 md:left-6 bottom-4 md:bottom-6 z-50"
     >
       <div className="flex flex-col space-y-4">

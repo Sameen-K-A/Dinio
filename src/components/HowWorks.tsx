@@ -23,18 +23,14 @@ const WorksSection: React.FC = () => {
             <motion.div
                initial={{ opacity: 0, y: 0 }}
                animate={{ opacity: 1, y: 0 }}
-               transition={{ duration: 0.5, ease: "easeOut" }}
+               transition={{ duration: 0, ease: "easeOut" }}
             >
                {steps.map((step, index) => (
                   <motion.div
                      key={index}
                      initial={{ opacity: 0, y: 20 }}
                      animate={{ opacity: 1, y: 0 }}
-                     transition={{
-                        duration: 0.5,
-                        delay: 0.2 + index * 0.1,
-                        ease: "easeOut"
-                     }}
+                     transition={{ ease: "easeOut" }}
                      className="mb-6"
                   >
                      <h3 className="text-base md:text-lg font-semibold mb-4">
@@ -51,7 +47,7 @@ const WorksSection: React.FC = () => {
          <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+            transition={{ ease: "easeOut" }}
             className="text-center absolute text-sm bottom-10"
          >
             No waiters. No delays. Just smart service.

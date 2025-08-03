@@ -9,7 +9,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
+      transition={{ delay: 0.5, duration: 0.3, ease: "easeOut" }}
       className="fixed top-0 left-0 right-0 z-50 p-4 py-6 lg:p-6"
     >
       <div className="flex justify-between items-center">

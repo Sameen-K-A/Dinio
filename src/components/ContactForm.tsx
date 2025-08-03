@@ -1,8 +1,9 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 
 const formSchema = z.object({
   fullName: z.string().trim().min(2, 'Full name is required'),
@@ -13,6 +14,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const {
     register,
     handleSubmit,
@@ -34,8 +36,11 @@ export default function ContactForm() {
     try {
       await emailjs.send(serviceID, templateID, templateParams, publicKey);
       reset();
+      setSubmitStatus('success');
+      setTimeout(() => setSubmitStatus('idle'), 3000);
     } catch (error) {
-      alert('Failed to send message. Please try again later.');
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 3000);
     }
   };
 
@@ -45,7 +50,7 @@ export default function ContactForm() {
         <motion.div
           initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.3, delay: 0, ease: "easeOut" }}
           className="w-full"
         >
           <div className="bg-[#1d1d1d] rounded-4xl p-4 md:p-6">
@@ -89,14 +94,45 @@ export default function ContactForm() {
                 )}
               </div>
 
-              <div className='w-full flex justify-center'>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-fit bg-[#666666] text-black py-2 px-6 rounded-lg cursor-pointer font-semibold hover:bg-[#767676] transition-colors duration-300 focus:outline-none"
-                >
-                  {isSubmitting ? 'Sending' : 'Send'}
-                </button>
+              <div className="w-full flex justify-center">
+                <AnimatePresence mode="wait">
+                  {submitStatus === 'success' ? (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.2 }}
+                      className="w-fit bg-[#666666] text-black py-2 px-6 rounded-lg font-bold"
+                    >
+                      ✓ Sent successfully
+                    </motion.div>
+                  ) : submitStatus === 'error' ? (
+                    <motion.div
+                      key="error"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.2 }}
+                      className="w-fit bg-[#666666] text-black py-2 px-6 rounded-lg font-bold"
+                    >
+                      ✗ Failed to send
+                    </motion.div>
+                  ) : (
+                    <motion.button
+                      key="submit"
+                      type="submit"
+                      disabled={isSubmitting}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.2 }}
+                      className="w-fit bg-[#666666] text-black py-2 px-6 rounded-lg cursor-pointer font-semibold hover:bg-[#767676] transition-colors duration-300 focus:outline-none"
+                    >
+                      {isSubmitting ? 'Sending...' : 'Send'}
+                    </motion.button>
+                  )}
+                </AnimatePresence>
               </div>
             </form>
           </div>

@@ -12,7 +12,7 @@ export default function HomeSection() {
           <motion.p
             initial={{ opacity: 0, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.5, ease: "easeOut" }}
+            transition={{ delay: 0.5, duration: 0.2, ease: "easeOut" }}
             className="text-xs md:text-sm font-bold tracking-wide"
           >
             Order Smart. Serve Fast.
