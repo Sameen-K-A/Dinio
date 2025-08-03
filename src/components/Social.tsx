@@ -5,7 +5,7 @@ import { RiInstagramFill } from 'react-icons/ri';
 export default function SocialIcons() {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 0 }}
+      initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
       className="fixed left-4 md:left-6 bottom-4 md:bottom-6 z-50"

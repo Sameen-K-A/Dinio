@@ -1,94 +1,105 @@
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const formSchema = z.object({
+  fullName: z.string().trim().min(2, 'Full name is required'),
+  email: z.string().trim().email('Invalid email address'),
+  message: z.string().trim().min(5, 'Message must be at least 5 characters'),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    message: ''
-  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({ resolver: zodResolver(formSchema) });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const onSubmit = async (data: FormData) => {
+    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
+    const templateParams = {
+      name: data.fullName,
+      email: data.email,
+      message: data.message,
+    };
+
+    try {
+      await emailjs.send(serviceID, templateID, templateParams, publicKey);
+      alert('Message sent successfully!');
+      reset();
+    } catch (error) {
+      console.error('Email send error:', error);
+      alert('Failed to send message. Please try again later.');
+    }
   };
 
   return (
-    <div className="h-[100dvh] w-full bg-black text-white flex items-center justify-center px-6 md:px-8 pt-20 md:pt-24">
-      <div className="max-w-6xl mx-auto w-full">
-
-
-        {/* Right Side - Contact Form */}
+    <div className="h-[100dvh] w-full flex items-center justify-center p-4 md:p-6">
+      <div className="max-w-lg mx-auto w-full">
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
+          initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
           className="w-full"
         >
-          <div className="bg-gray-900 rounded-2xl p-8 md:p-10 shadow-2xl border border-gray-800">
-            <h3 className="text-2xl md:text-3xl font-semibold mb-8 text-center">
+          <div className="bg-[#1d1d1d] rounded-4xl p-4 md:p-6">
+            <h3 className="text-4xl font-bold mb-8 md:mb-15 mt-5 md:mt-8 text-center">
               CONTACT FORM
             </h3>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 md:space-y-10 px-5 md:px-10">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-2">
-                  Full Name
-                </label>
                 <input
                   type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300"
-                  placeholder="Enter your full name"
+                  {...register("fullName")}
+                  className="w-full py-2 md:py-3 text-sm bg-transparent border-b border-[#666666] text-white placeholder-[#666666] focus:outline-none"
+                  placeholder="Full Name"
                 />
+                {errors.fullName && (
+                  <p className="text-red-500 font-semibold text-xs mt-1">{errors.fullName.message}</p>
+                )}
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email
-                </label>
                 <input
                   type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300"
-                  placeholder="Enter your email address"
+                  {...register("email")}
+                  className="w-full py-2 md:py-3 text-sm bg-transparent border-b border-[#666666] text-white placeholder-[#666666] focus:outline-none"
+                  placeholder="E-Mail"
                 />
+                {errors.email && (
+                  <p className="text-red-500 font-semibold text-xs mt-1">{errors.email.message}</p>
+                )}
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
                 <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 resize-none"
-                  placeholder="Tell us about your project or ask any questions"
+                  {...register("message")}
+                  className="w-full py-2 md:py-3 text-sm h-32 resize-none bg-transparent border-b border-[#666666] text-white placeholder-[#666666] focus:outline-none"
+                  placeholder="What you want to say"
                 />
+                {errors.message && (
+                  <p className="text-red-500 font-semibold text-xs mt-1">{errors.message.message}</p>
+                )}
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-white text-black py-3 px-6 rounded-lg font-semibold hover:bg-gray-200 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900"
-              >
-                Send
-              </button>
+              <div className='w-full flex justify-center'>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-fit bg-[#666666] text-black py-2 px-6 rounded-lg cursor-pointer font-semibold hover:bg-[#767676] transition-colors duration-300 focus:outline-none"
+                >
+                  {isSubmitting ? 'Sending' : 'Send'}
+                </button>
+              </div>
             </form>
           </div>
         </motion.div>

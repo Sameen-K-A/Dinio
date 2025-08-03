@@ -30,7 +30,7 @@ export default function ContactSection() {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="md:text-lg leading-relaxed mb-8"
+            className="md:text-lg leading-relaxed mb-15"
           >
             Got a question, a spark of curiosity, or something you'd love to share? Whether you're exploring how we work, thinking about onboarding, or just wondering what we're building — we're here and ready to listen.
             Your message won't go into a void. It lands with the people who care.
@@ -43,14 +43,14 @@ export default function ContactSection() {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="space-y-2"
+            className="space-y-1"
           >
             <h2 className="text-4xl font-bold tracking-tight">
               E-mail
             </h2>
             <a
               href="mailto:hello@dinio.in"
-              className="text-xl font-medium"
+              className="md:text-xl"
             >
               hello@dinio.in
             </a>
