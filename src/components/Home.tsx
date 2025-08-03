@@ -6,7 +6,7 @@ export default function HomeSection() {
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight">
-            Dinio
+            <img src="/logo.svg" alt="Dinio Logo" className="h-[1em] inline-block" />
           </h1>
 
           <motion.p

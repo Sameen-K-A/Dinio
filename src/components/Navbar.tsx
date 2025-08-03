@@ -15,10 +15,11 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       <div className="flex justify-between items-center">
         <button
           onClick={() => onNavigate('home')}
-          className="text-xl md:text-2xl cursor-pointer font-bold hover:text-gray-300 transition-colors duration-300"
+          className="cursor-pointer hover:opacity-80 transition-opacity duration-300"
         >
-          Dinio
+          <img src="/logo.svg" alt="Logo" className="h-4 md:h-6 w-auto" />
         </button>
+
 
         <div className="flex space-x-4 md:space-x-10">
           <button
