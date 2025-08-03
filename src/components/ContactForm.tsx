@@ -33,10 +33,8 @@ export default function ContactForm() {
 
     try {
       await emailjs.send(serviceID, templateID, templateParams, publicKey);
-      alert('Message sent successfully!');
       reset();
     } catch (error) {
-      console.error('Email send error:', error);
       alert('Failed to send message. Please try again later.');
     }
   };
